@@ -15,7 +15,7 @@ app.get("/", async (req, res, next) => {
   const sql = await dbClient();
   const [results] = await sql`select now();`;
   return res.status(200).json({
-    message: "Hello from root!",
+    message: "Hello from the top of the mountain!",
     results: results.now,
   });
 });
