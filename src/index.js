@@ -2,6 +2,7 @@ const serverless = require("serverless-http");
 const express = require("express");
 const { getDbClient } = require("./db/clients");
 const crud = require("./db/crud");
+const validators = require("./db/validators");
 const app = express();
 
 app.use(express.json());
@@ -39,10 +40,20 @@ app.get("/leads/:id", async (req, res, next) => {
 });
 
 app.post("/leads", async (req, res, next) => {
-  const data = await req.body;
-  // const { email } = data;
+  const postData = await req.body;
+  const { data, hasError, message } = await validators.validateLead(postData);
+  if (hasError === true) {
+    return res.status(400).json({
+      message: message ? message : "Invalid request. Please try again.",
+    });
+  } else if (hasError === undefined) {
+    return res.status(500).json({
+      message: message,
+    });
+  }
+
   const result = await crud.newLead(data);
-  return res.status(200).json({
+  return res.status(201).json({
     results: result,
   });
 });
