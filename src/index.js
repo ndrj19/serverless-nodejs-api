@@ -18,6 +18,7 @@ app.get("/", async (req, res, next) => {
     results: delta,
     stage: STAGE,
     ghahaegi: "Ghahägi",
+    hobby: "Bulle goh schlah",
   });
 });
 
