@@ -17,6 +17,7 @@ app.get("/", async (req, res, next) => {
     message: "Hello from the top of the mountain!",
     results: delta,
     stage: STAGE,
+    ghahaegi: "Ghahägi",
   });
 });
 
