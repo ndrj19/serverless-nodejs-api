@@ -8,4 +8,13 @@ const LeadTable = pgTable("leads", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-module.exports.LeadTable = LeadTable;
+const CharacterTable = pgTable("characters", {
+  id: serial("id").primaryKey().notNull(),
+  name: text("name").notNull(),
+  house: text("house").notNull(),
+  title: text("title").notNull(),
+  status: text("status").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+module.exports = { LeadTable, CharacterTable };
