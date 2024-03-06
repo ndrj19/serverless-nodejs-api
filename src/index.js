@@ -9,22 +9,12 @@ const app = express();
 app.use(express.json());
 
 app.get("/", async (req, res, next) => {
-  const sql = await getDbClient();
-  const now = Date.now();
-  const [dbNowResult] = await sql`select now();`;
-  const delta = (dbNowResult.now.getTime() - now) / 1000;
   return res.status(200).json({
-    message: "Hello from the top of the mountain!",
-    results: delta,
+    message:
+      "Hi, this is a A Song Of Ice And Fire API with info regarding the characters in the books. More routes will be added.",
+    GET_routes: ["characters", "characters/:id"],
+    POST_routes: ["characters"],
     stage: STAGE,
-    ghahaegi: "Ghahägi",
-    hobby: "Bulle goh schlah",
-  });
-});
-
-app.get("/path", (req, res, next) => {
-  return res.status(200).json({
-    message: "Hello from path!",
   });
 });
 
@@ -103,9 +93,5 @@ app.use((req, res, next) => {
     error: "Not Found",
   });
 });
-
-// app.listen(3000, () => {
-//   console.log("hello from http://localhost:3000");
-// });
 
 module.exports.handler = serverless(app);
