@@ -59,7 +59,7 @@ const getCharacter = async (pId) => {
     .select({ id, name, house, title, status })
     .from(schemas.CharacterTable)
     .where(eq(schemas.CharacterTable.id, pId));
-  return result;
+  return result[0];
 };
 
 const searchCharacterByName = async (qName) => {
