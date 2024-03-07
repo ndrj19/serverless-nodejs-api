@@ -2,9 +2,16 @@ const landingAction = async (req, res, next) => {
   const STAGE = process.env.STAGE || "prod";
   return res.status(200).json({
     message:
-      "Hi, this is a A Song Of Ice And Fire API with info regarding the characters in the books. More routes will be added.",
-    GET_routes: ["characters", "characters/:id"],
-    POST_routes: ["characters"],
+      "Welcome to the A Song Of Ice And Fire API. This API provides information about characters from the books. More routes will be added in the future.",
+    GET_routes: [
+      "characters: Retrieve all characters.",
+      "characters/:id: Retrieve a specific character by their ID.",
+      "search-name?name=YOUR_SEARCH: Search characters by name.",
+      "search-house?house=YOUR_SEARCH: Search characters by house name.",
+    ],
+    POST_routes: [
+      "characters: Add a new character. Request body should include character details.",
+    ],
     stage: STAGE,
   });
 };
