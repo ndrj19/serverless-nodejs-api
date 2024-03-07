@@ -1,6 +1,6 @@
 const clients = require("./clients");
 const schemas = require("./schemas");
-const { desc, eq } = require("drizzle-orm");
+const { desc, eq, ilike, sql } = require("drizzle-orm");
 
 const newLead = async ({ email }) => {
   const db = await clients.getDrizzleDbClient();
@@ -32,7 +32,7 @@ const getLead = async (id) => {
   return null;
 };
 
-const newCharacter = async ({ name, house, title, status }) => {
+const newCharacter = async ({ id, name, house, title, status }) => {
   const db = await clients.getDrizzleDbClient();
   const result = await db
     .insert(schemas.CharacterTable)
@@ -44,22 +44,42 @@ const newCharacter = async ({ name, house, title, status }) => {
 
 const listCharacters = async () => {
   const db = await clients.getDrizzleDbClient();
-  const { name, house, title, status } = schemas.CharacterTable;
+  const { id, name, house, title, status } = schemas.CharacterTable;
   const results = await db
-    .select({ name, house, title, status })
+    .select({ id, name, house, title, status })
     .from(schemas.CharacterTable)
     .orderBy(schemas.CharacterTable.id);
   return results;
 };
 
-const getCharacter = async (id) => {
+const getCharacter = async (pId) => {
   const db = await clients.getDrizzleDbClient();
-  const { name, house, title, status } = schemas.CharacterTable;
+  const { id, name, house, title, status } = schemas.CharacterTable;
   const result = await db
-    .select({ name, house, title, status })
+    .select({ id, name, house, title, status })
     .from(schemas.CharacterTable)
-    .where(eq(schemas.CharacterTable.id, id));
+    .where(eq(schemas.CharacterTable.id, pId));
   return result;
+};
+
+const searchCharacterByName = async (qName) => {
+  const db = await clients.getDrizzleDbClient();
+  const { id, name, house, title, status } = schemas.CharacterTable;
+  const results = await db
+    .select({ id, name, house, title, status })
+    .from(schemas.CharacterTable)
+    .where(ilike(schemas.CharacterTable.name, `%${qName}%`));
+  return results;
+};
+
+const searchCharacterByHouse = async (qHouse) => {
+  const db = await clients.getDrizzleDbClient();
+  const { id, name, house, title, status } = schemas.CharacterTable;
+  const results = await db
+    .select({ id, name, house, title, status })
+    .from(schemas.CharacterTable)
+    .where(ilike(schemas.CharacterTable.house, `%${qHouse}%`));
+  return results;
 };
 
 module.exports = {
@@ -69,4 +89,6 @@ module.exports = {
   newCharacter,
   listCharacters,
   getCharacter,
+  searchCharacterByName,
+  searchCharacterByHouse,
 };
