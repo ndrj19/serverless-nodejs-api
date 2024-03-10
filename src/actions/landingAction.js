@@ -8,6 +8,7 @@ const landingAction = async (req, res, next) => {
       "characters/:id: Retrieve a specific character by their ID.",
       "search-name?name=YOUR_SEARCH: Search characters by name.",
       "search-house?house=YOUR_SEARCH: Search characters by house name.",
+      "houses: Retrieve all houses.",
     ],
     POST_routes: [
       "characters: Add a new character. Request body should include character details.",
