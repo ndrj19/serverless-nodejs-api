@@ -82,6 +82,15 @@ const searchCharacterByHouse = async (qHouse) => {
   return results;
 };
 
+const listHouses = async () => {
+  const db = await clients.getDrizzleDbClient();
+  const { house } = schemas.CharacterTable;
+  const results = await db
+    .selectDistinct({ house })
+    .from(schemas.CharacterTable);
+  return results;
+};
+
 module.exports = {
   newLead,
   listLeads,
@@ -91,4 +100,5 @@ module.exports = {
   getCharacter,
   searchCharacterByName,
   searchCharacterByHouse,
+  listHouses,
 };
