@@ -42,6 +42,24 @@ const newCharacter = async ({ id, name, house, title, status }) => {
   return result;
 };
 
+const updateCharacterById = async ({ id, name, house, title, status }) => {
+  const db = await clients.getDrizzleDbClient();
+  const characterTable = schemas.CharacterTable;
+
+  const updateObj = {};
+  if (name) updateObj.name = name;
+  if (house) updateObj.house = house;
+  if (title) updateObj.title = title;
+  if (status) updateObj.status = status;
+
+  const result = await db
+    .update(characterTable)
+    .set(updateObj)
+    .where(eq(characterTable.id, id))
+    .returning({ updatedId: characterTable.id });
+  return result;
+};
+
 const listCharacters = async () => {
   const db = await clients.getDrizzleDbClient();
   const { id, name, house, title, status } = schemas.CharacterTable;
@@ -96,6 +114,7 @@ module.exports = {
   listLeads,
   getLead,
   newCharacter,
+  updateCharacterById,
   listCharacters,
   getCharacter,
   searchCharacterByName,

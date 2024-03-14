@@ -1,4 +1,4 @@
-const { z } = require("zod");
+const { z, number } = require("zod");
 
 const validateLead = async (postData) => {
   const lead = z.object({ email: z.string().email() });
@@ -20,6 +20,7 @@ const validateLead = async (postData) => {
     message: message,
   };
 };
+
 const validateCharacter = async (postData) => {
   const character = z.object({
     name: z
@@ -56,4 +57,46 @@ const validateCharacter = async (postData) => {
   };
 };
 
-module.exports = { validateLead, validateCharacter };
+const validateCharacterUpdate = async (putData) => {
+  const character = z.object({
+    id: number(),
+    name: z
+      .string()
+      .min(3, { message: "Must be 4 or more characters long" })
+      .max(128, { message: "Must be 128 or fewer characters long" })
+      .optional(),
+    house: z
+      .string()
+      .max(128, { message: "Must be 128 or fewer characters long" })
+      .optional(),
+
+    title: z
+      .string()
+      .max(512, { message: "Must be 512 or fewer characters long" })
+      .optional(),
+    status: z
+      .string()
+      .min(4, { message: "Must be 4 or more characters long" })
+      .max(64, { message: "Must be 64 or fewer characters long" })
+      .optional(),
+  });
+
+  let hasError;
+  let validData = {};
+  let message;
+  try {
+    validData = character.parse(putData);
+    hasError = false;
+  } catch (err) {
+    hasError = true;
+    message = err.message;
+  }
+
+  return {
+    data: validData,
+    hasError: hasError,
+    message: message,
+  };
+};
+
+module.exports = { validateLead, validateCharacter, validateCharacterUpdate };
