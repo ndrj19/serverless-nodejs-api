@@ -8,6 +8,9 @@ const { searchByNameAction } = require("./actions/searchByNameAction");
 const { searchByHouseAction } = require("./actions/searchByHouseAction");
 const { newCharacterAction } = require("./actions/newCharacterAction");
 const { listHousesAction } = require("./actions/listHousesAction");
+const {
+  updateCharacterByIdAction,
+} = require("./actions/updateCharacterByIdAction");
 const app = express();
 
 app.use(express.json());
@@ -20,6 +23,8 @@ app.get("/search-house/", searchByHouseAction);
 app.get("/houses/", listHousesAction);
 
 app.post("/characters", newCharacterAction);
+
+app.put("/characters", updateCharacterByIdAction);
 
 app.use((req, res, next) => {
   return res.status(404).json({

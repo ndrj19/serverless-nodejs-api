@@ -13,6 +13,9 @@ const landingAction = async (req, res, next) => {
     POST_routes: [
       "characters: Add a new character. Request body should include character details.",
     ],
+    PUT_routes: [
+      "characters: Update an existing character by ID. Request body should include character ID and fields to be updated.",
+    ],
     stage: STAGE,
   });
 };
