@@ -109,6 +109,16 @@ const listHouses = async () => {
   return results;
 };
 
+const listCharactersByStatus = async (pStatus) => {
+  const db = await clients.getDrizzleDbClient();
+  const { id, name, house, title, status } = schemas.CharacterTable;
+  const results = await db
+    .select({ id, name, house, title, status })
+    .from(schemas.CharacterTable)
+    .where(eq(status, pStatus));
+  return results;
+};
+
 module.exports = {
   newLead,
   listLeads,
@@ -120,4 +130,5 @@ module.exports = {
   searchCharacterByName,
   searchCharacterByHouse,
   listHouses,
+  listCharactersByStatus,
 };

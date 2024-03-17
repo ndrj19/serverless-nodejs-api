@@ -4,7 +4,8 @@ const { drizzle } = require("drizzle-orm/neon-http");
 
 async function getDbClient() {
   const dbUrl = await secrets.getDatabaseUrl();
-  neonConfig.fetchConnectionCache = true;
+  // The `fetchConnectionCache` option is deprecated (now always `true`)
+  // neonConfig.fetchConnectionCache = true;
   const sql = neon(dbUrl);
   return sql;
 }
