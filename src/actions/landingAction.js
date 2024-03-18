@@ -6,6 +6,7 @@ const landingAction = async (req, res, next) => {
     GET_routes: [
       "characters: Retrieve all characters.",
       "characters/:id: Retrieve a specific character by their ID.",
+      "characters/status/:status: Retrieve characteres based on their status.",
       "search-name?name=YOUR_SEARCH: Search characters by name.",
       "search-house?house=YOUR_SEARCH: Search characters by house name.",
       "houses: Retrieve all houses.",
