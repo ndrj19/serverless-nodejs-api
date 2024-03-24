@@ -1,8 +1,11 @@
 const { validateCharacter } = require("../db/validators");
-const { newCharacter } = require("../db/crud");
+const { newCharacter, getMaxHouseId } = require("../db/crud");
 
 const newCharacterAction = async (req, res, next) => {
   const postData = await req.body;
+  if (!postData.house) {
+    postData.house = null;
+  }
   const { data, hasError, message } = await validateCharacter(postData);
   if (hasError === true) {
     return res.status(400).json({

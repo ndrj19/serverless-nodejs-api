@@ -1,6 +1,6 @@
 const clients = require("./clients");
 const { CharacterTable, HousesTable } = require("./schemas");
-const { desc, eq, ilike, sql } = require("drizzle-orm");
+const { desc, eq, ilike, max } = require("drizzle-orm");
 
 const newCharacter = async ({ id, name, house, title, status }) => {
   const db = await clients.getDrizzleDbClient();
@@ -10,6 +10,14 @@ const newCharacter = async ({ id, name, house, title, status }) => {
     .returning();
   if (result.length === 1) return result[0];
   return result;
+};
+
+const getMaxHouseId = async () => {
+  const db = await clients.getDrizzleDbClient();
+  const result = await db
+    .select({ value: max(HousesTable.id) })
+    .from(HousesTable);
+  return result[0].value;
 };
 
 const newHouse = async ({ id, name }) => {
@@ -137,4 +145,5 @@ module.exports = {
   searchCharacterByHouse,
   listHouses,
   listCharactersByStatus,
+  getMaxHouseId,
 };
