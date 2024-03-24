@@ -1,45 +1,9 @@
 {
-  "id": "05958ef7-dd29-44f1-bf5a-eefa166fcbaa",
-  "prevId": "49a19822-35ba-43ff-8015-0ed4246520d2",
+  "id": "4ce70712-50c5-4037-af87-1a2373c0e7da",
+  "prevId": "2aab4b82-646f-4bb0-8b31-45e61156cc35",
   "version": "5",
   "dialect": "pg",
   "tables": {
-    "leads": {
-      "name": "leads",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "email": {
-          "name": "email",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'Oranges are orange.'"
-        },
-        "created_at": {
-          "name": "created_at",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "now()"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {},
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "characters": {
       "name": "characters",
       "schema": "",
@@ -58,9 +22,9 @@
         },
         "house": {
           "name": "house",
-          "type": "text",
+          "type": "integer",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "title": {
           "name": "title",
@@ -83,7 +47,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "characters_house_houses_id_fk": {
+          "name": "characters_house_houses_id_fk",
+          "tableFrom": "characters",
+          "tableTo": "houses",
+          "columnsFrom": [
+            "house"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },

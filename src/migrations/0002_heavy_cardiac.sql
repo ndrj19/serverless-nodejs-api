@@ -1,0 +1,1 @@
+ALTER TABLE "characters" ALTER COLUMN "house" DROP NOT NULL;

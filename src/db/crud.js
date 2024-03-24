@@ -1,11 +1,11 @@
 const clients = require("./clients");
-const schemas = require("./schemas");
+const { CharacterTable, HousesTable } = require("./schemas");
 const { desc, eq, ilike, sql } = require("drizzle-orm");
 
 const newCharacter = async ({ id, name, house, title, status }) => {
   const db = await clients.getDrizzleDbClient();
   const result = await db
-    .insert(schemas.CharacterTable)
+    .insert(CharacterTable)
     .values({ name: name, house: house, title: title, status: status })
     .returning();
   if (result.length === 1) return result[0];
@@ -14,7 +14,6 @@ const newCharacter = async ({ id, name, house, title, status }) => {
 
 const updateCharacterById = async ({ id, name, house, title, status }) => {
   const db = await clients.getDrizzleDbClient();
-  const CharacterTable = schemas.CharacterTable;
 
   const updateObj = {};
   if (name) updateObj.name = name;
@@ -32,110 +31,89 @@ const updateCharacterById = async ({ id, name, house, title, status }) => {
 
 const listCharacters = async () => {
   const db = await clients.getDrizzleDbClient();
-  // const { id, name, house, title, status } = schemas.CharacterTable;
   const results = await db
     .select({
-      id: schemas.CharacterTable.id,
-      name: schemas.CharacterTable.name,
-      house: schemas.HousesTable.name,
-      title: schemas.CharacterTable.title,
-      status: schemas.CharacterTable.status,
+      id: CharacterTable.id,
+      name: CharacterTable.name,
+      house: HousesTable.name,
+      title: CharacterTable.title,
+      status: CharacterTable.status,
     })
-    .from(schemas.CharacterTable)
-    .leftJoin(
-      schemas.HousesTable,
-      eq(schemas.CharacterTable.house, schemas.HousesTable.id)
-    )
-    .orderBy(schemas.CharacterTable.id);
+    .from(CharacterTable)
+    .leftJoin(HousesTable, eq(CharacterTable.house, HousesTable.id))
+    .orderBy(CharacterTable.id);
   return results;
 };
 
 const getCharacter = async (pId) => {
   const db = await clients.getDrizzleDbClient();
-  // const { id, name, title, status } = schemas.CharacterTable;
-  // const houseName = schemas.HousesTable.house;
 
   const result = await db
     .select({
-      id: schemas.CharacterTable.id,
-      name: schemas.CharacterTable.name,
-      house: schemas.HousesTable.name,
-      title: schemas.CharacterTable.title,
-      status: schemas.CharacterTable.status,
+      id: CharacterTable.id,
+      name: CharacterTable.name,
+      house: HousesTable.name,
+      title: CharacterTable.title,
+      status: CharacterTable.status,
     })
-    .from(schemas.CharacterTable)
-    .leftJoin(
-      schemas.HousesTable,
-      eq(schemas.CharacterTable.house, schemas.HousesTable.id)
-    )
-    .where(eq(schemas.CharacterTable.id, pId));
+    .from(CharacterTable)
+    .leftJoin(HousesTable, eq(CharacterTable.house, HousesTable.id))
+    .where(eq(CharacterTable.id, pId));
   return result[0];
 };
 
 const searchCharacterByName = async (qName) => {
   const db = await clients.getDrizzleDbClient();
-  // const { id, name, house, title, status } = schemas.CharacterTable;
   const results = await db
     .select({
-      id: schemas.CharacterTable.id,
-      name: schemas.CharacterTable.name,
-      house: schemas.HousesTable.name,
-      title: schemas.CharacterTable.title,
-      status: schemas.CharacterTable.status,
+      id: CharacterTable.id,
+      name: CharacterTable.name,
+      house: HousesTable.name,
+      title: CharacterTable.title,
+      status: CharacterTable.status,
     })
-    .from(schemas.CharacterTable)
-    .leftJoin(
-      schemas.HousesTable,
-      eq(schemas.CharacterTable.house, schemas.HousesTable.id)
-    )
-    .where(ilike(schemas.CharacterTable.name, `%${qName}%`));
+    .from(CharacterTable)
+    .leftJoin(HousesTable, eq(CharacterTable.house, HousesTable.id))
+    .where(ilike(CharacterTable.name, `%${qName}%`));
   return results;
 };
 
 const searchCharacterByHouse = async (qHouse) => {
   const db = await clients.getDrizzleDbClient();
-  // const { id, name, house, title, status } = schemas.CharacterTable;
   const results = await db
     .select({
-      id: schemas.CharacterTable.id,
-      name: schemas.CharacterTable.name,
-      house: schemas.HousesTable.name,
-      title: schemas.CharacterTable.title,
-      status: schemas.CharacterTable.status,
+      id: CharacterTable.id,
+      name: CharacterTable.name,
+      house: HousesTable.name,
+      title: CharacterTable.title,
+      status: CharacterTable.status,
     })
-    .from(schemas.CharacterTable)
-    .leftJoin(
-      schemas.HousesTable,
-      eq(schemas.CharacterTable.house, schemas.HousesTable.id)
-    )
-    .where(ilike(schemas.HousesTable.name, `%${qHouse}%`));
+    .from(CharacterTable)
+    .leftJoin(HousesTable, eq(CharacterTable.house, HousesTable.id))
+    .where(ilike(HousesTable.name, `%${qHouse}%`));
   return results;
 };
 
 const listHouses = async () => {
   const db = await clients.getDrizzleDbClient();
-  const { id, name } = schemas.HousesTable;
-  const results = await db.select({ id, name }).from(schemas.HousesTable);
+  const { id, name } = HousesTable;
+  const results = await db.select({ id, name }).from(HousesTable);
   return results;
 };
 
 const listCharactersByStatus = async (status) => {
   const db = await clients.getDrizzleDbClient();
-  // const { id, name, house, title, status } = schemas.CharacterTable;
   const results = await db
     .select({
-      id: schemas.CharacterTable.id,
-      name: schemas.CharacterTable.name,
-      house: schemas.HousesTable.name,
-      title: schemas.CharacterTable.title,
-      status: schemas.CharacterTable.status,
+      id: CharacterTable.id,
+      name: CharacterTable.name,
+      house: HousesTable.name,
+      title: CharacterTable.title,
+      status: CharacterTable.status,
     })
-    .from(schemas.CharacterTable)
-    .leftJoin(
-      schemas.HousesTable,
-      eq(schemas.CharacterTable.house, schemas.HousesTable.id)
-    )
-    .where(eq(schemas.CharacterTable.status, status));
+    .from(CharacterTable)
+    .leftJoin(HousesTable, eq(CharacterTable.house, HousesTable.id))
+    .where(eq(CharacterTable.status, status));
   return results;
 };
 

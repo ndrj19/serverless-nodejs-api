@@ -1,7 +1,7 @@
 const { listCharactersByStatus } = require("../db/crud");
 const errors = require("../utils/errors");
 
-const listCharacterByStatus = async (req, res, next) => {
+const listCharacterByStatusAction = async (req, res, next) => {
   let status = 200;
 
   try {
@@ -23,4 +23,4 @@ const listCharacterByStatus = async (req, res, next) => {
   });
 };
 
-module.exports = { listCharacterByStatus };
+module.exports = { listCharacterByStatusAction };
