@@ -94,4 +94,35 @@ const validateCharacterUpdate = async (putData) => {
   };
 };
 
-module.exports = { validateLead, validateCharacter, validateCharacterUpdate };
+const validateHouse = async (postData) => {
+  const house = z.object({
+    name: z
+      .string()
+      .min(4, { message: "Must be 4 or more characters long" })
+      .max(128, { message: "Must be 128 or fewer characters long" }),
+  });
+
+  let hasError;
+  let validData = {};
+  let message;
+  try {
+    validData = house.parse(postData);
+    hasError = false;
+  } catch (err) {
+    hasError = true;
+    message = err.message;
+  }
+
+  return {
+    data: validData,
+    hasError: hasError,
+    message: message,
+  };
+};
+
+module.exports = {
+  validateLead,
+  validateCharacter,
+  validateCharacterUpdate,
+  validateHouse,
+};
