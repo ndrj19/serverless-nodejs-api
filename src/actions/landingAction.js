@@ -12,7 +12,8 @@ const landingAction = async (req, res, next) => {
       "houses: Retrieve all houses.",
     ],
     POST_routes: [
-      "characters: Add a new character. Request body should include character details.",
+      "characters: Add a new character. Request body should include character details. House (houseId) is optional but has to be existing.",
+      "houses: Add a new house. Request body should include house name",
     ],
     PUT_routes: [
       "characters: Update an existing character by ID. Request body should include character ID and fields to be updated.",
