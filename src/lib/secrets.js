@@ -19,7 +19,7 @@ const getDatabaseUrl = async () => {
 };
 
 const putDatabaseUrl = async (stage, dbUrlVal) => {
-  const paramStage = stage ? stage : "dev";
+  const paramStage = stage ? stage : "prod";
   if (paramStage === "prod") return;
   if (!dbUrlVal) return;
 
