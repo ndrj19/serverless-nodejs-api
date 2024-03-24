@@ -42,6 +42,7 @@ const validateCharacter = async (postData) => {
 };
 
 const validateCharacterUpdate = async (putData) => {
+  const maxHouseId = await getMaxHouseId();
   const character = z.object({
     id: number(),
     name: z
@@ -49,7 +50,12 @@ const validateCharacterUpdate = async (putData) => {
       .min(3, { message: "Must be 4 or more characters long" })
       .max(128, { message: "Must be 128 or fewer characters long" })
       .optional(),
-    house: z.number().int().positive().optional(),
+    house: z
+      .number()
+      .int()
+      .positive()
+      .lte(maxHouseId, { message: "House does not exist" })
+      .optional(),
 
     title: z
       .string()
