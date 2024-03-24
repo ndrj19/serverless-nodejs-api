@@ -12,6 +12,16 @@ const newCharacter = async ({ id, name, house, title, status }) => {
   return result;
 };
 
+const newHouse = async ({ id, name }) => {
+  const db = await clients.getDrizzleDbClient();
+  const result = await db
+    .insert(HousesTable)
+    .values({ name: name })
+    .returning();
+  if (result.length === 1) return result[0];
+  return result;
+};
+
 const updateCharacterById = async ({ id, name, house, title, status }) => {
   const db = await clients.getDrizzleDbClient();
 
@@ -119,6 +129,7 @@ const listCharactersByStatus = async (status) => {
 
 module.exports = {
   newCharacter,
+  newHouse,
   updateCharacterById,
   listCharacters,
   getCharacter,

@@ -14,6 +14,7 @@ const {
 const {
   listCharacterByStatusAction,
 } = require("./actions/listCharactersByStatusAction");
+const { newHouseAction } = require("./actions/newHouseAction");
 const app = express();
 
 app.use(express.json());
@@ -27,6 +28,7 @@ app.get("/houses/", listHousesAction);
 app.get("/characters/status/:status", listCharacterByStatusAction);
 
 app.post("/characters", newCharacterAction);
+app.post("/houses", newHouseAction);
 
 app.put("/characters", updateCharacterByIdAction);
 
