@@ -27,9 +27,7 @@ const validateCharacter = async (postData) => {
       .string()
       .min(4, { message: "Must be 4 or more characters long" })
       .max(128, { message: "Must be 128 or fewer characters long" }),
-    house: z
-      .string()
-      .max(128, { message: "Must be 128 or fewer characters long" }),
+    house: z.number().int().positive(),
     title: z
       .string()
       .max(512, { message: "Must be 512 or fewer characters long" }),
@@ -65,10 +63,7 @@ const validateCharacterUpdate = async (putData) => {
       .min(3, { message: "Must be 4 or more characters long" })
       .max(128, { message: "Must be 128 or fewer characters long" })
       .optional(),
-    house: z
-      .string()
-      .max(128, { message: "Must be 128 or fewer characters long" })
-      .optional(),
+    house: z.number().int().positive().optional(),
 
     title: z
       .string()
