@@ -63,7 +63,7 @@ const listCharacters = async () => {
   return results;
 };
 
-const getCharacter = async (pId) => {
+const getCharacter = async (id) => {
   const db = await clients.getDrizzleDbClient();
 
   const result = await db
@@ -76,7 +76,7 @@ const getCharacter = async (pId) => {
     })
     .from(CharacterTable)
     .leftJoin(HousesTable, eq(CharacterTable.house, HousesTable.id))
-    .where(eq(CharacterTable.id, pId));
+    .where(eq(CharacterTable.id, id));
   return result[0];
 };
 
@@ -119,6 +119,16 @@ const listHouses = async () => {
   return results;
 };
 
+const getHouseById = async (hId) => {
+  const db = await clients.getDrizzleDbClient();
+  const { id, name } = HousesTable;
+  const result = await db
+    .select({ id, name })
+    .from(HousesTable)
+    .where(eq(HousesTable.id, hId));
+  return result[0];
+};
+
 const listCharactersByStatus = async (status) => {
   const db = await clients.getDrizzleDbClient();
   const results = await db
@@ -146,4 +156,5 @@ module.exports = {
   listHouses,
   listCharactersByStatus,
   getMaxHouseId,
+  getHouseById,
 };
