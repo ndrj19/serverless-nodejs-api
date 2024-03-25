@@ -15,6 +15,7 @@ const {
   listCharacterByStatusAction,
 } = require("./actions/listCharactersByStatusAction");
 const { newHouseAction } = require("./actions/newHouseAction");
+const { getHouseByIdAction } = require("./actions/getHouseByIdAction");
 const app = express();
 
 app.use(express.json());
@@ -25,6 +26,7 @@ app.get("/characters/:id", getChacaterByIdAction);
 app.get("/search-name/", searchByNameAction);
 app.get("/search-house/", searchByHouseAction);
 app.get("/houses/", listHousesAction);
+app.get("/houses/:id", getHouseByIdAction);
 app.get("/characters/status/:status", listCharacterByStatusAction);
 
 app.post("/characters", newCharacterAction);
